@@ -1,6 +1,6 @@
-package iterable.collection;
+package interfaces.iterable.collection;
 
-import iterable.CustomIterable;
+import interfaces.iterable.CustomIterable;
 
 public interface CustomCollection<E> extends CustomIterable<E> {
 

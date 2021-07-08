@@ -1,6 +1,6 @@
-package iterable.collection.list;
+package interfaces.iterable.collection.list;
 
-import iterable.collection.CustomCollection;
+import interfaces.iterable.collection.CustomCollection;
 
 public interface CustomList<E> extends CustomCollection<E> {
 
@@ -12,7 +12,6 @@ public interface CustomList<E> extends CustomCollection<E> {
     boolean add(E element);
 
     /**
-     *
      * @param index
      * @param element
      * @return true if adding is successful
@@ -20,7 +19,6 @@ public interface CustomList<E> extends CustomCollection<E> {
      * if the index is lower than zero or bigger than size.
      */
     boolean add(int index, E element) throws IllegalStateException;
-
 
 
 }
