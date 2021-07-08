@@ -1,8 +1,8 @@
 package iterable.collection;
 
-import java.util.Iterator;
+import iterable.CustomIterable;
 
-public interface CustomCollection<E> extends Iterator<E> {
+public interface CustomCollection<E> extends CustomIterable<E> {
 
     /**
      * @return size of collection
