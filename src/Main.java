@@ -1,17 +1,22 @@
-import implementations.CustomArrayCollection;
-import interfaces.iterable.collection.list.CustomList;
+import implementations.ArrayStack;
+import interfaces.Stack;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Main {
-
     public static void main(String[] args) {
-        CustomList<Integer> list = new CustomArrayCollection<>();
-        list.add(1);
-        list.add(2);
-        list.add(3);
 
-        list.add(1,4);
+        Stack<Integer>stack = new ArrayStack<>();
+        for (int i = 1; i <= 100; i++) {
+            stack.push(i);
+        }
 
-        System.out.println();
+        AtomicInteger sum = new AtomicInteger();
+        stack.forEach(e-> {
+            sum.set(sum.get() + e);
+        });
+
+        System.out.println(sum.get());
+
     }
-
 }
