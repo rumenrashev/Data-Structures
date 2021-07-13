@@ -2,13 +2,14 @@ package implementations;
 
 import interfaces.Iterator;
 import interfaces.Stack;
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-class ArrayStackTest {
+import static org.junit.jupiter.api.Assertions.*;
+
+class LinkedStackTest {
 
     private static final int SIZE = 100;
     private static final Integer LAST_ELEMENT = SIZE;
@@ -17,11 +18,11 @@ class ArrayStackTest {
 
     @BeforeAll
     static void init(){
-        stack = new ArrayStack<>();
+        stack = new LinkedStack<>();
         for (int i = 1; i <= SIZE; i++) {
             stack.push(i);
         }
-        emptyStack = new ArrayStack<>();
+        emptyStack = new LinkedStack<>();
     }
 
     @Test

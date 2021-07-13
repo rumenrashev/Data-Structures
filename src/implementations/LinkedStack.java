@@ -5,37 +5,33 @@ import interfaces.Stack;
 
 import java.util.function.Consumer;
 
-public class ArrayStack<E> implements Stack<E> {
+public class LinkedStack<E> implements Stack<E> {
 
-    private static final int DEFAULT_INITIAL_CAPACITY = 10;
-    private static final int DEFAULT_RESIZE_COEFFICIENT = 2;
-    private static final int DEFAULT_INITIAL_SIZE = 0;
-
-    private E[] arr;
+    private Node<E> head;
     private int size;
-
-    public ArrayStack() {
-        this.arr = (E[]) new Object[DEFAULT_INITIAL_CAPACITY];
-        this.size = DEFAULT_INITIAL_SIZE;
-    }
 
     @Override
     public void push(E element) {
         ensuresNotNull(element);
-        grow();
-        this.arr[this.size++] = element;
+        Node<E> node = new Node<E>().setElement(element);
+        if (this.head != null) {
+            node.setNext(this.head);
+        }
+        this.head = node;
+        this.size++;
     }
 
     @Override
     public E peek() {
         ensuresStackNotEmpty();
-        return this.arr[size - 1];
+        return this.head.getElement();
     }
 
     @Override
     public E pop() {
         E element = this.peek();
-        this.arr[--this.size] = null;
+        this.head = this.head.getNext();
+        this.size--;
         return element;
     }
 
@@ -51,8 +47,9 @@ public class ArrayStack<E> implements Stack<E> {
 
     @Override
     public boolean contains(E element) {
-        for(int i = 0; i < this.size; i++){
-            if(this.arr[i].equals(element)){
+        Iterator<E> iterator = this.iterator();
+        while (iterator.hasNext()){
+            if(iterator.next().equals(element)){
                 return true;
             }
         }
@@ -74,37 +71,30 @@ public class ArrayStack<E> implements Stack<E> {
     public Iterator<E> iterator() {
         return new Iterator<E>() {
 
-            private int current = size - 1;
+            private Node<E> current = head;
 
             @Override
             public boolean hasNext() {
-                return current >= 0;
+                return current != null;
             }
 
             @Override
             public E next() {
-                if(current < 0 ){
+                if(current == null ){
                     throw new IllegalStateException("No elements remaining");
                 }
-                return arr[current--];
+                E element = this.current.getElement();
+                this.current = this.current.getNext();
+                return element;
             }
         };
     }
 
     @Override
     public void forEach(Consumer<E> action) {
-        for(int i = 0; i < this.size; i++){
-            action.accept(this.arr[i]);
-        }
-    }
-
-    private void grow(){
-        if(this.size == this.arr.length - 1) {
-            E[] newArr = (E[]) new Object[this.arr.length * DEFAULT_RESIZE_COEFFICIENT];
-            for (int i = 0; i < this.size; i++) {
-                newArr[i] = arr[i];
-            }
-            this.arr = newArr;
+        Iterator<E> iterator = this.iterator();
+        while (iterator.hasNext()){
+            action.accept(iterator.next());
         }
     }
 
@@ -114,8 +104,8 @@ public class ArrayStack<E> implements Stack<E> {
         }
     }
 
-    private void ensuresStackNotEmpty(){
-        if(isEmpty()){
+    private void ensuresStackNotEmpty() {
+        if (isEmpty()) {
             throw new IllegalStateException("Stack is empty!");
         }
     }
