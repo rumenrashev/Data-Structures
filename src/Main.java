@@ -1,19 +1,21 @@
 import implementations.ArrayStack;
+import implementations.LinkedStack;
 import interfaces.Stack;
-
-import java.util.Arrays;
-import java.util.StringJoiner;
-import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) {
+        long start = System.currentTimeMillis();
+        Stack<Integer> arrayStack = new LinkedStack<>();
 
-        Stack<Integer> stack = new ArrayStack<>();
-        for(int i = 1; i <= 100; i++){
-            stack.push(i);
+        for (int i = 0; i <= 100_000_000; i++) {
+            arrayStack.push(i);
         }
 
-        Object[] objects = stack.toArray();
-        System.out.println();
+        while (arrayStack.isEmpty()) {
+            arrayStack.pop();
+        }
+
+        long end = System.currentTimeMillis();
+        System.out.println(end - start);
     }
 }
