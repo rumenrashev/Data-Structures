@@ -7,7 +7,7 @@ public class Main {
         long start = System.currentTimeMillis();
         Stack<Integer> arrayStack = new LinkedStack<>();
 
-        for (int i = 0; i <= 100_000_000; i++) {
+        for (int i = 0; i <= Integer.MAX_VALUE; i++) {
             arrayStack.push(i);
         }
 
