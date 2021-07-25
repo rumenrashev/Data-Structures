@@ -1,12 +1,11 @@
-package implementations;
+package implementations.stack;
 
 import interfaces.Iterator;
-import interfaces.Queue;
+import interfaces.Stack;
 
-import java.util.NoSuchElementException;
 import java.util.function.Consumer;
 
-public class LinkedQueue<E> implements Queue<E> {
+public class LinkedStack<E> implements Stack<E> {
 
     private static class Node<E>{
         E element;
@@ -17,35 +16,34 @@ public class LinkedQueue<E> implements Queue<E> {
         }
     }
 
-    public Node<E> first;
     private Node<E> last;
     private int size;
 
     @Override
     public void push(E element) {
-        Node<E> node = new Node<E>(element);
-        if(size == 0){
-            this.first = node;
-        }else if(size == 1){
-            this.last = node;
-            this.first.next = this.last;
-        }else {
-            this.last.next = node;
-            this.last = node;
+        if(element == null){
+            throw new NullPointerException("Element cannot be null.");
         }
+        Node<E> node = new Node<>(element);
+        if (this.last != null) {
+            node.next = this.last;
+        }
+        this.last = node;
         this.size++;
-    }
-    @Override
-    public E peek() {
-        ensureNotEmpty();
-        return first.element;
     }
 
     @Override
-    public E poll() {
-        ensureNotEmpty();
+    public E peek() {
+        if (isEmpty()) {
+            throw new IllegalStateException("Stack is empty!");
+        }
+        return this.last.element;
+    }
+
+    @Override
+    public E pop() {
         E element = this.peek();
-        first = first.next;
+        this.last = this.last.next;
         this.size--;
         return element;
     }
@@ -64,8 +62,7 @@ public class LinkedQueue<E> implements Queue<E> {
     public boolean contains(E element) {
         Iterator<E> iterator = this.iterator();
         while (iterator.hasNext()){
-            E next = iterator.next();
-            if(next.equals(element)){
+            if(iterator.next().equals(element)){
                 return true;
             }
         }
@@ -74,20 +71,20 @@ public class LinkedQueue<E> implements Queue<E> {
 
     @Override
     public Object[] toArray() {
-        Object[] arr = new Object[size];
-        int ind = 0;
-        Iterator<E> iterator = iterator();
+        Object[] arrToReturn = new Object[size];
+        Iterator<E> iterator = this.iterator();
+        int count = 0;
         while (iterator.hasNext()){
-            arr[ind++] = iterator.next();
+            arrToReturn[count++] = iterator.next();
         }
-        return arr;
+        return arrToReturn;
     }
 
     @Override
     public Iterator<E> iterator() {
         return new Iterator<E>() {
 
-            private Node<E> current = first;
+            private Node<E> current = last;
 
             @Override
             public boolean hasNext() {
@@ -96,28 +93,21 @@ public class LinkedQueue<E> implements Queue<E> {
 
             @Override
             public E next() {
-                try {
-                    E element = current.element;
-                    current = current.next;
-                    return element;
-                }catch (NullPointerException e){
-                    throw new NoSuchElementException("Iterator does not have next");
+                if(current == null ){
+                    throw new IllegalStateException("No elements remaining");
                 }
+                E element = this.current.element;
+                this.current = this.current.next;
+                return element;
             }
         };
     }
 
     @Override
     public void forEach(Consumer<E> action) {
-        Iterator<E> iterator = iterator();
+        Iterator<E> iterator = this.iterator();
         while (iterator.hasNext()){
             action.accept(iterator.next());
-        }
-    }
-
-    private void ensureNotEmpty(){
-        if(this.size == 0){
-            throw new IllegalArgumentException("Queue is empty");
         }
     }
 }

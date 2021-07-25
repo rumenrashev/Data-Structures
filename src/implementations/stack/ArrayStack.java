@@ -1,4 +1,4 @@
-package implementations;
+package implementations.stack;
 
 import interfaces.Iterator;
 import interfaces.Stack;

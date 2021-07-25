@@ -1,5 +1,6 @@
 package implementations;
 
+import implementations.queue.LinkedQueue;
 import interfaces.Iterator;
 import interfaces.Queue;
 import org.junit.jupiter.api.BeforeEach;

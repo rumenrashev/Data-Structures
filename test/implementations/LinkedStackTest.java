@@ -1,5 +1,6 @@
 package implementations;
 
+import implementations.stack.LinkedStack;
 import interfaces.Iterator;
 import interfaces.Stack;
 import org.junit.jupiter.api.BeforeAll;
