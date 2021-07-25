@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.util.NoSuchElementException;
 import java.util.concurrent.atomic.AtomicInteger;
 
 class ArrayStackTest {
@@ -96,7 +97,7 @@ class ArrayStackTest {
         assertTrue(iterator.hasNext());
         assertEquals(LAST_ELEMENT - 1,iterator.next());
         assertFalse(emptyStack.iterator().hasNext());
-        assertThrows(IllegalStateException.class,
+        assertThrows(NoSuchElementException.class,
                 ()-> emptyStack.iterator().next()) ;
         // Recover original stack
         init();

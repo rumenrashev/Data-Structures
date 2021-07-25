@@ -3,6 +3,7 @@ package implementations;
 import interfaces.Iterator;
 import interfaces.Stack;
 
+import java.util.NoSuchElementException;
 import java.util.function.Consumer;
 
 public class ArrayStack<E> implements Stack<E> {
@@ -15,20 +16,24 @@ public class ArrayStack<E> implements Stack<E> {
     private int size;
 
     public ArrayStack() {
-        this.arr = (E[]) new Object[DEFAULT_INITIAL_CAPACITY];
+        this.arr = createArr(DEFAULT_INITIAL_CAPACITY);
         this.size = DEFAULT_INITIAL_SIZE;
     }
 
     @Override
     public void push(E element) {
-        ensuresNotNull(element);
+        if(element == null){
+            throw new NullPointerException("Element to push cannot be null");
+        }
         grow();
         this.arr[this.size++] = element;
     }
 
     @Override
     public E peek() {
-        ensuresStackNotEmpty();
+        if(isEmpty()){
+            throw new IllegalStateException("Stack is empty!");
+        }
         return this.arr[size - 1];
     }
 
@@ -61,13 +66,11 @@ public class ArrayStack<E> implements Stack<E> {
 
     @Override
     public Object[] toArray() {
-        Object[] arrToReturn = new Object[size];
-        Iterator<E> iterator = this.iterator();
-        int count = 0;
-        while (iterator.hasNext()){
-            arrToReturn[count++] = iterator.next();
+        Object[] arr = new Object[size];
+        for(int i = this.size - 1; i >= 0; i--){
+            arr[size - 1 - i] = this.arr[i];
         }
-        return arrToReturn;
+        return arr;
     }
 
     @Override
@@ -84,7 +87,7 @@ public class ArrayStack<E> implements Stack<E> {
             @Override
             public E next() {
                 if(current < 0 ){
-                    throw new IllegalStateException("No elements remaining");
+                    throw new NoSuchElementException("Stack does not have next.");
                 }
                 return arr[current--];
             }
@@ -100,23 +103,15 @@ public class ArrayStack<E> implements Stack<E> {
 
     private void grow(){
         if(this.size == this.arr.length - 1) {
-            E[] newArr = (E[]) new Object[this.arr.length * DEFAULT_RESIZE_COEFFICIENT];
-            for (int i = 0; i < this.size; i++) {
-                newArr[i] = arr[i];
+            E[] newArr = createArr(this.arr.length * DEFAULT_RESIZE_COEFFICIENT);
+            if (this.size >= 0) {
+                System.arraycopy(arr, 0, newArr, 0, this.size);
             }
             this.arr = newArr;
         }
     }
 
-    private void ensuresNotNull(E element){
-        if(element == null){
-            throw new NullPointerException("Element cannot be null.");
-        }
-    }
-
-    private void ensuresStackNotEmpty(){
-        if(isEmpty()){
-            throw new IllegalStateException("Stack is empty!");
-        }
+    private E[] createArr(int capacity){
+        return (E[]) new Object[capacity];
     }
 }
