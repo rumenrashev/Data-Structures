@@ -1,4 +1,6 @@
-package interfaces;
+package interfaces.iterable.collections;
+
+import interfaces.iterable.collections.Collection;
 
 public interface Queue<E> extends Collection<E> {
 

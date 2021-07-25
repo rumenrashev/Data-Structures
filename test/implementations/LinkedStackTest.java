@@ -1,11 +1,12 @@
 package implementations;
 
-import implementations.stack.LinkedStack;
-import interfaces.Iterator;
-import interfaces.Stack;
+import implementations.iterable.collections.linked.LinkedStack;
+import interfaces.iterable.Iterator;
+import interfaces.iterable.collections.Stack;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.util.NoSuchElementException;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -35,7 +36,7 @@ class LinkedStackTest {
     @Test
     void push_ShouldThrowNullPointerException(){
         assertThrows(
-                NullPointerException.class,
+                IllegalArgumentException.class,
                 ()-> stack.push(null));
     }
 
@@ -47,7 +48,7 @@ class LinkedStackTest {
     @Test
     void peek_ShouldThrowException(){
         assertThrows(
-                IllegalStateException.class,
+                NoSuchElementException.class,
                 ()-> emptyStack.peek());
     }
 
@@ -65,7 +66,7 @@ class LinkedStackTest {
     @Test
     void pop_ShouldThrowException(){
         assertThrows(
-                IllegalStateException.class,
+                NoSuchElementException.class,
                 ()-> emptyStack.pop());
     }
 
@@ -98,7 +99,7 @@ class LinkedStackTest {
         assertTrue(iterator.hasNext());
         assertEquals(LAST_ELEMENT - 1,iterator.next());
         assertFalse(emptyStack.iterator().hasNext());
-        assertThrows(IllegalStateException.class,
+        assertThrows(NoSuchElementException.class,
                 ()-> emptyStack.iterator().next()) ;
         // Recover original stack
         init();

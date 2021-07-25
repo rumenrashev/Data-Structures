@@ -1,4 +1,6 @@
-package interfaces;
+package interfaces.iterable;
+
+import interfaces.iterable.Iterator;
 
 import java.util.function.Consumer;
 

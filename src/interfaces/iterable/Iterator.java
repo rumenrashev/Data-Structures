@@ -1,4 +1,4 @@
-package interfaces;
+package interfaces.iterable;
 
 import java.util.NoSuchElementException;
 import java.util.function.Consumer;

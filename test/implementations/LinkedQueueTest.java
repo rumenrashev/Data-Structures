@@ -1,8 +1,8 @@
 package implementations;
 
-import implementations.queue.LinkedQueue;
-import interfaces.Iterator;
-import interfaces.Queue;
+import implementations.iterable.collections.linked.LinkedQueue;
+import interfaces.iterable.Iterator;
+import interfaces.iterable.collections.Queue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -30,7 +30,7 @@ class LinkedQueueTest {
 
     @Test
     void peek() {
-        assertThrows(IllegalArgumentException.class, queue::peek);
+        assertThrows(NoSuchElementException.class, queue::peek);
         queue.push(1);
         queue.push(2);
         queue.push(3);
@@ -41,14 +41,14 @@ class LinkedQueueTest {
 
     @Test
     void poll() {
-        assertThrows(IllegalArgumentException.class, queue::poll);
+        assertThrows(NoSuchElementException.class, queue::poll);
         queue.push(1);
         queue.push(2);
         queue.push(3);
         assertEquals(1, queue.poll());
         assertEquals(2, queue.poll());
         assertEquals(3, queue.poll());
-        assertThrows(IllegalArgumentException.class, queue::poll);
+        assertThrows(NoSuchElementException.class, queue::poll);
     }
 
     @Test

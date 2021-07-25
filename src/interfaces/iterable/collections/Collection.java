@@ -1,4 +1,6 @@
-package interfaces;
+package interfaces.iterable.collections;
+
+import interfaces.iterable.Iterable;
 
 public interface Collection<E> extends Iterable<E> {
 
@@ -12,9 +14,14 @@ public interface Collection<E> extends Iterable<E> {
     int size();
 
     /**
-     * @return {@code true} if this collection contains at least one element.
+     * @return {@code true} if collection does not have elements.
      */
     boolean isEmpty();
+
+    /**
+     * @return {@code true} if this collection contains at least one element.
+     */
+    boolean isNotEmpty();
 
     /**
      * @return an {@code true} if this collection contains element
@@ -24,5 +31,5 @@ public interface Collection<E> extends Iterable<E> {
     /**
      * @return  an array containing all of the elements in this collection;
      */
-    Object[] toArray();
+    E[] toArray();
 }

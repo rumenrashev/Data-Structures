@@ -1,8 +1,8 @@
 package implementations;
 
-import implementations.stack.ArrayStack;
-import interfaces.Iterator;
-import interfaces.Stack;
+import implementations.iterable.collections.array.ArrayStack;
+import interfaces.iterable.Iterator;
+import interfaces.iterable.collections.Stack;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
