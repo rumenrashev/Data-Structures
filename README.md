@@ -1,5 +1,3 @@
-# java-data-structures-custom-implementation
-
 ### Stack implementations
 
 ##### Algorithm complexity the worst case
@@ -10,10 +8,10 @@
 
  \* amortized if ArrayStack should resize, but very rarely happens. 
 
-##### Time in milliseconds for to push and pop 1 million elements , performed on my machine
-| implementation |  time in milliseconds |
-| ---------------| --------------------- | 
-| ArrayStack     | 30-50                 | 
-| LinkedStack    | 140-170               | 
+### Queue implementations
 
-##### Conclusion : ArrayStack is around 3 times faster than LinkedStack.
+##### Algorithm complexity the worst case
+| implementation | push  | peek | poll | size |
+| -------------- | ----- | ---- | ---- | ---- |
+| LinkedQueue    | 0(1)  | O(1) | O(1) | O(1) |
+
