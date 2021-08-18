@@ -33,7 +33,7 @@ public abstract class AbstractCollection<E> implements Collection<E> {
 
     protected void ensureNotEmpty() {
         if (this.size == 0) {
-            throw new NoSuchElementException("Collection is empty.");
+            throw new IllegalStateException("Collection is empty.");
         }
     }
 

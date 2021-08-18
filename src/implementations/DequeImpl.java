@@ -1,12 +1,12 @@
 package implementations;
 
-import implementations.iterable.collections.linked.AbstractDoublyLinkedCollection;
+import implementations.iterable.collections.linked.DoublyLinkedList;
 import interfaces.iterable.Iterator;
 import interfaces.iterable.collections.Deque;
 
 import java.util.NoSuchElementException;
 
-public class DequeImpl<E> extends AbstractDoublyLinkedCollection<E> implements Deque<E> {
+public class DequeImpl<E> extends DoublyLinkedList<E> implements Deque<E> {
 
     @Override
     public void addFirst(E element) {

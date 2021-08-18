@@ -35,7 +35,7 @@ class ArrayStackTest {
     @Test
     void push_ShouldThrowNullPointerException(){
         assertThrows(
-                NullPointerException.class,
+                IllegalArgumentException.class,
                 ()-> stack.push(null));
     }
 

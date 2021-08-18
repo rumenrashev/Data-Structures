@@ -6,8 +6,6 @@ import interfaces.iterable.collections.Queue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.NoSuchElementException;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class LinkedQueueTest {
@@ -30,7 +28,7 @@ class LinkedQueueTest {
 
     @Test
     void peek() {
-        assertThrows(NoSuchElementException.class, queue::peek);
+        assertThrows(IllegalStateException.class, queue::peek);
         queue.push(1);
         queue.push(2);
         queue.push(3);
@@ -41,14 +39,14 @@ class LinkedQueueTest {
 
     @Test
     void poll() {
-        assertThrows(NoSuchElementException.class, queue::poll);
+        assertThrows(IllegalStateException.class, queue::poll);
         queue.push(1);
         queue.push(2);
         queue.push(3);
         assertEquals(1, queue.poll());
         assertEquals(2, queue.poll());
         assertEquals(3, queue.poll());
-        assertThrows(NoSuchElementException.class, queue::poll);
+        assertThrows(IllegalStateException.class, queue::poll);
     }
 
     @Test
@@ -106,13 +104,12 @@ class LinkedQueueTest {
         queue.push(3);
         Iterator<Integer> iterator = queue.iterator();
         assertTrue(iterator.hasNext());
-        assertEquals(1,iterator.next());
+        assertEquals(1, iterator.next());
         assertTrue(iterator.hasNext());
-        assertEquals(2,iterator.next());
+        assertEquals(2, iterator.next());
         assertTrue(iterator.hasNext());
-        assertEquals(3,iterator.next());
+        assertEquals(3, iterator.next());
         assertFalse(iterator.hasNext());
-        assertThrows(NoSuchElementException.class, iterator::next);
     }
 
     @Test
@@ -123,6 +120,6 @@ class LinkedQueueTest {
         String expected = "123";
         final StringBuilder actual = new StringBuilder();
         queue.forEach(actual::append);
-        assertEquals(expected,actual.toString());
+        assertEquals(expected, actual.toString());
     }
 }
