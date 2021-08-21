@@ -1,27 +1,27 @@
 package interfaces.iterable.collections;
 
-import interfaces.iterable.collections.Collection;
-
 public interface Queue<E> extends Collection<E> {
 
     /**
-     * Pushes an element last int the queue.
-     * @param   element element to be pushed last in the queue.
+     * adds an element last int the queue.
+     *
+     * @param element element to be pushed last in the queue.
      */
-    void push(E element);
+    void addLast(E element);
 
     /**
      * @return element the first element of the queue
-     * @throws  IllegalStateException  if this queue is empty.
+     * @throws IllegalStateException if this queue is empty.
      */
-    E peek();
+    E getFirst();
 
     /**
      * Removes the first element of this queue
      * and returns element
+     *
      * @return element first element of the queue
-     * @throws  IllegalStateException  if this queue is empty.
+     * @throws IllegalStateException if this queue is empty.
      */
-    E poll();
+    E removeFirst();
 
 }

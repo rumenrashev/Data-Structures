@@ -1,6 +1,6 @@
 package implementations;
 
-import implementations.iterable.collections.linked.LinkedStack;
+import implementations.iterable.collections.linked.SinglyLinkedList;
 import interfaces.iterable.Iterator;
 import interfaces.iterable.collections.Stack;
 import org.junit.jupiter.api.BeforeAll;
@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class LinkedStackTest {
+class SingleLinkedList {
 
     private static final int SIZE = 100;
     private static final Integer LAST_ELEMENT = SIZE;
@@ -19,43 +19,37 @@ class LinkedStackTest {
 
     @BeforeAll
     static void init() {
-        stack = new LinkedStack<>();
+        stack = new SinglyLinkedList<>();
         for (int i = 1; i <= SIZE; i++) {
-            stack.push(i);
+            stack.addLast(i);
         }
-        emptyStack = new LinkedStack<>();
+        emptyStack = new SinglyLinkedList<>();
     }
 
     @Test
-    void push_ShouldWorkCorrect() {
+    void addLast_ShouldWorkCorrect() {
         assertEquals(SIZE, stack.size());
-        assertEquals(LAST_ELEMENT, stack.peek());
+        assertEquals(LAST_ELEMENT, stack.getLast());
+    }
+
+
+    @Test
+    void getLast_ShouldWork() {
+        assertEquals(LAST_ELEMENT, stack.getLast());
     }
 
     @Test
-    void push_ShouldThrowIllegalArgumentException() {
-        assertThrows(
-                IllegalArgumentException.class,
-                () -> stack.push(null));
-    }
-
-    @Test
-    void peek_ShouldWork() {
-        assertEquals(LAST_ELEMENT, stack.peek());
-    }
-
-    @Test
-    void peek_ShouldThrowException() {
+    void getLast_ShouldThrowException() {
         assertThrows(
                 IllegalStateException.class,
-                () -> emptyStack.peek());
+                () -> emptyStack.getLast());
     }
 
     @Test
-    void pop_ShouldWorkCorrect() {
+    void removeLast_ShouldWorkCorrect() {
         assertEquals(SIZE, stack.size());
-        assertEquals(LAST_ELEMENT, stack.pop());
-        assertEquals(LAST_ELEMENT - 1, stack.peek());
+        assertEquals(LAST_ELEMENT, stack.removeLast());
+        assertEquals(LAST_ELEMENT - 1, stack.getLast());
         assertEquals(SIZE - 1, stack.size());
 
         // Recover original stack
@@ -63,10 +57,10 @@ class LinkedStackTest {
     }
 
     @Test
-    void pop_ShouldThrowException() {
+    void removeLast_ShouldThrowException() {
         assertThrows(
                 IllegalStateException.class,
-                () -> emptyStack.pop());
+                () -> emptyStack.removeLast());
     }
 
     @Test

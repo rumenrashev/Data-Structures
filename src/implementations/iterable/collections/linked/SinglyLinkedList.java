@@ -1,39 +1,34 @@
 package implementations.iterable.collections.linked;
 
 import implementations.iterable.collections.AbstractCollection;
+import implementations.iterable.collections.linked.nodes.SingleNode;
 import interfaces.iterable.Iterator;
+import interfaces.iterable.collections.Stack;
 
-public class SinglyLinkedList<E> extends AbstractCollection<E> {
+public class SinglyLinkedList<E> extends AbstractCollection<E> implements Stack<E> {
 
-     protected static class Node<E> {
-        public E element;
-        public Node<E> next;
+    private SingleNode<E> last;
 
-        public Node(E element) {
-            this.element = element;
+    @Override
+    public void addLast(E element) {
+        SingleNode<E> node = new SingleNode<>(element);
+        if(super.size != 0){
+            node.setPrevious(this.last);
         }
-    }
-
-    protected Node<E> top;
-
-    public void addLast(E element){
-        ensureNotNull(element);
-        Node<E> node = new Node<>(element);
-        if (super.size != 0) {
-            node.next = this.top;
-        }
-        this.top = node;
+        this.last = node;
         super.size++;
     }
 
-    public E getLast(){
+    @Override
+    public E getLast() {
         ensureNotEmpty();
-        return top.element;
+        return this.last.getElement();
     }
 
-    public E removeLast(){
+    @Override
+    public E removeLast() {
         E element = getLast();
-        this.top = this.top.next;
+        this.last = last.getPrevious();
         super.size--;
         return element;
     }
@@ -42,7 +37,7 @@ public class SinglyLinkedList<E> extends AbstractCollection<E> {
     public Iterator<E> iterator() {
         return new Iterator<E>() {
 
-            private Node<E> current = top;
+            private SingleNode<E> current = last;
 
             @Override
             public boolean hasNext() {
@@ -51,15 +46,10 @@ public class SinglyLinkedList<E> extends AbstractCollection<E> {
 
             @Override
             public E next() {
-                E element = current.element;
-                current = current.next;
+                E element = current.getElement();
+                current = current.getPrevious();
                 return element;
             }
         };
     }
-
-
-
-
-
 }

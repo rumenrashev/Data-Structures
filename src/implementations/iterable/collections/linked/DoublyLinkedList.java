@@ -1,105 +1,79 @@
 package implementations.iterable.collections.linked;
 
 import implementations.iterable.collections.AbstractCollection;
+import implementations.iterable.collections.linked.nodes.DoubleNode;
 import interfaces.iterable.Iterator;
+import interfaces.iterable.collections.Deque;
+import interfaces.iterable.collections.Queue;
 
-public class DoublyLinkedList<E> extends AbstractCollection<E> {
-
-    protected static class Node<E> {
-        public E element;
-        public Node<E> previous;
-        public Node<E> next;
-
-        public Node(E element) {
-            this.element = element;
-        }
-    }
-
-    public Node<E> first;
-    public Node<E> last;
-
-    public void addLast(E element) {
-        Node<E> node = new Node<>(element);
-        if (super.size == 0) {
-            this.first = node;
-            this.last = node;
-        } else if (super.size == 1) {
-            this.last = node;
-            this.last.previous = this.first;
-            this.first.next = this.last;
-        } else {
-            this.last.next = node;
-            node.previous = this.last;
-            this.last = node;
-        }
-        this.size++;
-    }
-
-    public void addFirst(E element) {
-        Node<E> node = new Node<>(element);
-        if (super.size == 0) {
-            this.first = node;
-            this.last = node;
-        } else if (super.size == 1) {
-            this.first = node;
-            this.first.next = this.last;
-            this.last.previous = this.first;
-        } else {
-            this.first.previous = node;
-            node.next = this.first;
-            this.first = node;
-        }
-        this.size++;
-    }
-
-    public E getFirst() {
-        ensureNotEmpty();
-        return first.element;
-    }
-
-    public E getLast() {
-        ensureNotEmpty();
-        return last.element;
-    }
-
-    public E removeFirst() {
-        E element = getFirst();
-        if (super.size == 1) {
-            this.first = null;
-            this.last = null;
-        } else if (super.size == 2) {
-            this.last.previous = null;
-            this.first = this.last;
-        } else {
-            this.first = first.next;
-        }
-        this.size--;
-        return element;
-    }
+public class DoublyLinkedList<E> extends AbstractCollection<E> implements Queue<E>, Deque<E> {
 
 
-    public E removeLast() {
-        E element = getLast();
-        if (super.size == 1) {
-            this.first = null;
-            this.last = null;
-        } else if (super.size == 2) {
-            this.first.next = null;
-            this.last = this.first;
-        } else {
-            this.last = this.last.previous;
-        }
-        this.size--;
-        return element;
-    }
+    private DoubleNode<E> first;
+    private DoubleNode<E> last;
 
 
     @Override
-    public Iterator<E> iterator() {
+    public void addLast(E element) {
+        DoubleNode<E> node = new DoubleNode<>(element);
+        if(super.size == 0){
+            this.last = node;
+            this.first = this.last;
+        }else if(super.size == 1){
+            this.last = node;
+            this.first.setNext(this.last);
+            this.last.setPrevious(this.first);
+        }else {
+            node.setPrevious(this.last);
+            this.last.setNext(node);
+            this.last = node;
+        }
+        this.size++;
+    }
 
+    @Override
+    public void addFirst(E element) {
+        DoubleNode<E> node = new DoubleNode<>(element);
+        if(super.size == 0){
+            this.last = node;
+            this.first = this.last;
+        }else if(super.size == 1){
+            this.first = node;
+            this.last.setPrevious(this.first);
+            this.first.setNext(this.last);
+        }else {
+            node.setNext(this.first);
+            this.first.setPrevious(node);
+            this.first = node;
+        }
+        this.size++;
+    }
+
+    @Override
+    public E getFirst() {
+        ensureNotEmpty();
+        return this.first.getElement();
+    }
+
+    @Override
+    public E removeFirst() {
+        E element = getFirst();
+        this.first = this.first.getNext();
+        if(this.first != null){
+            this.first.setPrevious(null);
+        }
+        if(super.size < 2){
+            this.last = this.first;
+        }
+        super.size--;
+        return element;
+    }
+
+    @Override
+    public Iterator<E> iterator() {
         return new Iterator<E>() {
 
-            Node<E> current = first;
+            private DoubleNode<E> current = first;
 
             @Override
             public boolean hasNext() {
@@ -108,8 +82,8 @@ public class DoublyLinkedList<E> extends AbstractCollection<E> {
 
             @Override
             public E next() {
-                E element = current.element;
-                current = current.next;
+                E element = current.getElement();
+                current = current.getNext();
                 return element;
             }
         };

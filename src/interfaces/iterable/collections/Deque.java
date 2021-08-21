@@ -1,17 +1,7 @@
 package interfaces.iterable.collections;
 
-public interface Deque<E> extends Collection<E> {
+public interface Deque<E> extends Queue<E> {
 
-    void addFirst(E element);
-
-    void addLast(E element);
-
-    E getLast();
-
-    E getFirst();
-
-    E removeFirst();
-
-    E removeLast();
+    public void addFirst(E element);
 
 }
